@@ -9,9 +9,11 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 
+
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function fetchRevenue() {
+
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
@@ -20,6 +22,13 @@ export async function fetchRevenue() {
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue[]>`SELECT * FROM revenue`;
+    // Fetch the last 5 invoices, sorted by date
+  //   const data = await sql<LatestInvoiceRaw[]>`
+  // SELECT invoices.amount, customers.name, customers.image_url, customers.email
+  // FROM invoices
+  // JOIN customers ON invoices.customer_id = customers.id
+  // ORDER BY invoices.date DESC
+  // LIMIT 5`;
 
     // console.log('Data fetch completed after 3 seconds.');
 
